@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const { exec } = require('child_process');
 const app = express();
 
 app.use(cors());
@@ -48,6 +49,26 @@ app.delete('/api/tasks/:id', (req, res) => {
 // Start server
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`\n  ✅ Server running at http://localhost:${PORT}`);
-  console.log(`  📝 Open http://localhost:${PORT} in your browser\n`);
+  console.log(`\n  ================================================`);
+  console.log(`  🚀 Workshop Server running!`);
+  console.log(`  📝 To-Do App:    http://localhost:${PORT}`);
+  console.log(`  📊 Slides:       http://localhost:${PORT}/slides.html`);
+  console.log(`  📄 Cheat Sheet:  http://localhost:${PORT}/cheatsheet.html`);
+  console.log(`  ================================================\n`);
+
+  // Automatically open browser tabs on startup
+  const openCmd = process.platform === 'win32' ? 'start ""' : 'open';
+  
+  // 1. Open Slides
+  exec(`${openCmd} "http://localhost:${PORT}/slides.html"`);
+  
+  // 2. Open App Demo
+  setTimeout(() => {
+    exec(`${openCmd} "http://localhost:${PORT}"`);
+  }, 500);
+
+  // 3. Open GitHub Repo
+  setTimeout(() => {
+    exec(`${openCmd} "https://github.com/vijayummalraju-star/fullstack-workshop"`);
+  }, 1000);
 });
