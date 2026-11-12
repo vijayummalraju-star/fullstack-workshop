@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📝 Full Stack To-Do App</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 24px;
+      font-size: 28px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    input {
+      flex: 1;
+      padding: 12px 16px;
+      font-size: 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus { border-color: #667eea; }
+
+    .add-btn {
+      padding: 12px 24px;
+      font-size: 16px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .add-btn:hover { background: #5a6fd6; }
+
+    ul { list-style: none; }
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+
+    li:hover { background: #e9ecef; }
+
+    li.done .task-title {
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    .task-title {
+      flex: 1;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      color: #e74c3c;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0 4px;
+      transition: transform 0.2s;
+    }
+
+    .delete-btn:hover { transform: scale(1.3); }
+
+    .empty {
+      text-align: center;
+      color: #999;
+      padding: 20px;
+      font-size: 16px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #999;
+      font-size: 13px;
+    }
+
+    .stats {
+      text-align: center;
+      color: #667eea;
+      font-size: 14px;
+      margin-bottom: 16px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📝 My Tasks</h1>
+    <div class="stats" id="stats"></div>
+
+    <div class="input-row">
+      <input id="taskInput" placeholder="What needs to be done?" />
+      <button class="add-btn" onclick="addTask()">Add</button>
+    </div>
+
+    <ul id="taskList"></ul>
+
+    <div class="footer">
+      Full Stack Workshop Demo — Express + HTML/JS
+    </div>
+  </div>
+
+  <script>
+    const API = '/api/tasks';
+
+    // Load all tasks from the backend
+    async function loadTasks() {
+      try {
+        const res = await fetch(API);
+        const tasks = await res.json();
+        const list = document.getElementById('taskList');
+        const stats = document.getElementById('stats');
+
+        if (tasks.length === 0) {
+          list.innerHTML = '<div class="empty">No tasks yet — add one above! 🚀</div>';
+          stats.textContent = '';
+          return;
+        }
+
+        const doneCount = tasks.filter(t => t.done).length;
+        stats.textContent = `${doneCount}/${tasks.length} completed`;
+
+        list.innerHTML = tasks.map(t => `
+          <li class="${t.done ? 'done' : ''}">
+            <span class="task-title" onclick="toggleTask(${t.id})">${escapeHtml(t.title)}</span>
+            <button class="delete-btn" onclick="deleteTask(${t.id})">✕</button>
+          </li>
+        `).join('');
+      } catch (err) {
+        console.error('Failed to load tasks:', err);
+      }
+    }
+
+    // Add a new task
+    async function addTask() {
+      const input = document.getElementById('taskInput');
+      const title = input.value.trim();
+      if (!title) return;
+
+      await fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title })
+      });
+
+      input.value = '';
+      input.focus();
+      loadTasks();
+    }
+
+    // Toggle task done/undone
+    async function toggleTask(id) {
+      await fetch(`${API}/${id}`, { method: 'PUT' });
+      loadTasks();
+    }
+
+    // Delete a task
+    async function deleteTask(id) {
+      await fetch(`${API}/${id}`, { method: 'DELETE' });
+      loadTasks();
+    }
+
+    // Prevent XSS
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Allow Enter key to add tasks
+    document.getElementById('taskInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') addTask();
+    });
+
+    // Initial load
+    loadTasks();
+  </script>
+</body>
+</html>

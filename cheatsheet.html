@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full Stack Cheat Sheet</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+    @page { size: A4; margin: 15mm; }
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .no-print { display: none; }
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f5f5;
+      color: #1a1a2e;
+      padding: 20px;
+    }
+
+    .page {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 36px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 3px solid #667eea;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      color: #667eea;
+      font-weight: 800;
+    }
+
+    .header p {
+      color: #666;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .section {
+      margin-bottom: 18px;
+    }
+
+    .section h2 {
+      font-size: 16px;
+      color: white;
+      background: #667eea;
+      padding: 6px 12px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .section h2.green { background: #34d399; color: #064e3b; }
+    .section h2.orange { background: #f59e0b; color: #78350f; }
+    .section h2.purple { background: #8b5cf6; }
+    .section h2.red { background: #ef4444; }
+
+    .section table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .section th {
+      background: #f0f0ff;
+      padding: 6px 10px;
+      text-align: left;
+      font-weight: 600;
+      border-bottom: 2px solid #667eea;
+    }
+
+    .section td {
+      padding: 5px 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    code {
+      background: #f0f0ff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+    }
+
+    .code-box {
+      background: #1a1a2e;
+      color: #e2e8f0;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-family: 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 8px;
+      overflow-x: auto;
+    }
+
+    .code-box .kw { color: #c678dd; }
+    .code-box .str { color: #98c379; }
+    .code-box .fn { color: #61afef; }
+    .code-box .cm { color: #5c6370; }
+
+    .tip {
+      background: #f0fdf4;
+      border-left: 4px solid #34d399;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      margin-top: 8px;
+      color: #064e3b;
+    }
+
+    .resources {
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .resources a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .print-btn {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 32px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .print-btn:hover { background: #5a6fd6; }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+    <div class="header">
+      <h1>🚀 Full Stack Development — Cheat Sheet</h1>
+      <p>Everything you need to get started, on one page</p>
+    </div>
+
+    <div class="columns">
+
+      <!-- LEFT COLUMN -->
+      <div>
+        <div class="section">
+          <h2>🌐 Frontend (The Big 3)</h2>
+          <table>
+            <tr><th>Tech</th><th>Role</th><th>Analogy</th></tr>
+            <tr><td><strong>HTML</strong></td><td>Structure</td><td>🦴 Skeleton</td></tr>
+            <tr><td><strong>CSS</strong></td><td>Styling</td><td>👗 Clothes</td></tr>
+            <tr><td><strong>JavaScript</strong></td><td>Behavior</td><td>🧠 Brain</td></tr>
+          </table>
+          <div class="tip">
+            <strong>Frameworks:</strong> React, Vue, Angular, Svelte<br>
+            <strong>CSS:</strong> Tailwind, Bootstrap &nbsp;|&nbsp; <strong>Build:</strong> Vite
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="green">⚙️ Backend</h2>
+          <table>
+            <tr><th>Language</th><th>Framework</th></tr>
+            <tr><td>JavaScript</td><td><strong>Node.js + Express</strong></td></tr>
+            <tr><td>Python</td><td>FastAPI / Django</td></tr>
+            <tr><td>Java</td><td>Spring Boot</td></tr>
+            <tr><td>Go</td><td>Gin / Fiber</td></tr>
+          </table>
+          <div class="code-box">
+            <span class="cm">// Minimal Express server</span><br>
+            <span class="kw">const</span> app = <span class="fn">require</span>(<span class="str">'express'</span>)();<br>
+            app.<span class="fn">get</span>(<span class="str">'/api/hello'</span>, (req, res) =&gt;<br>
+            &nbsp;&nbsp;res.<span class="fn">json</span>({ msg: <span class="str">'Hello!'</span> }));<br>
+            app.<span class="fn">listen</span>(3000);
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="purple">🔌 REST API Methods</h2>
+          <table>
+            <tr><th>Method</th><th>Action</th><th>Example</th></tr>
+            <tr><td><code>GET</code></td><td>Read</td><td>/api/tasks</td></tr>
+            <tr><td><code>POST</code></td><td>Create</td><td>/api/tasks</td></tr>
+            <tr><td><code>PUT</code></td><td>Update</td><td>/api/tasks/1</td></tr>
+            <tr><td><code>DELETE</code></td><td>Delete</td><td>/api/tasks/1</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div>
+        <div class="section">
+          <h2 class="orange">🗄️ Databases</h2>
+          <table>
+            <tr><th></th><th>SQL</th><th>NoSQL</th></tr>
+            <tr><td><strong>Examples</strong></td><td>PostgreSQL, MySQL</td><td>MongoDB, Firebase</td></tr>
+            <tr><td><strong>Structure</strong></td><td>Tables & rows</td><td>JSON documents</td></tr>
+            <tr><td><strong>Query</strong></td><td><code>SELECT * FROM</code></td><td><code>db.find({})</code></td></tr>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2 class="red">📡 Request Flow</h2>
+          <div class="code-box" style="font-family: Inter, sans-serif; font-size: 13px; color: #a0aec0;">
+            User clicks "Add Task"<br>
+            &nbsp;&nbsp;↓<br>
+            Frontend → <span class="str">POST /api/tasks</span><br>
+            &nbsp;&nbsp;↓<br>
+            Backend validates & saves<br>
+            &nbsp;&nbsp;↓<br>
+            Database stores it ✅<br>
+            &nbsp;&nbsp;↓<br>
+            Backend → response to Frontend<br>
+            &nbsp;&nbsp;↓<br>
+            UI updates 🎉
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>🛠️ Essential Tools</h2>
+          <table>
+            <tr><td>📝 <strong>VS Code</strong></td><td>Code editor</td></tr>
+            <tr><td>🌿 <strong>Git + GitHub</strong></td><td>Version control</td></tr>
+            <tr><td>📬 <strong>Postman</strong></td><td>API testing</td></tr>
+            <tr><td>🟢 <strong>Node.js</strong></td><td>JS runtime</td></tr>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2>📚 Free Resources</h2>
+          <div class="resources">
+            🔗 <a href="https://freecodecamp.org">freeCodeCamp.org</a> — Full curriculum<br>
+            🔗 <a href="https://theodinproject.com">The Odin Project</a> — Project-based path<br>
+            🔗 <a href="https://developer.mozilla.org">MDN Web Docs</a> — Official docs<br>
+            🔗 <a href="https://javascript.info">JavaScript.info</a> — Deep JS<br>
+            🔗 <a href="https://youtube.com/@fireship">Fireship</a> — YouTube explainers
+          </div>
+        </div>
+      </div>
+
+      <!-- FULL WIDTH: Roadmap -->
+      <div class="full-width section">
+        <h2 class="purple">🗺️ 6-Month Learning Roadmap</h2>
+        <table>
+          <tr>
+            <th>Month 1-2</th>
+            <th>Month 3-4</th>
+            <th>Month 5-6</th>
+          </tr>
+          <tr>
+            <td>HTML, CSS, JavaScript, Git/GitHub</td>
+            <td>React or Vue, Node+Express, MongoDB/SQL</td>
+            <td>Build projects, Deploy to cloud, Portfolio site</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <button class="print-btn no-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+
+</body>
+</html>
